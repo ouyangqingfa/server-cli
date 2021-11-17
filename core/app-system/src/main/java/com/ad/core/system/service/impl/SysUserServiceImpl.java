@@ -1,0 +1,31 @@
+package com.ad.core.system.service.impl;
+
+import com.ad.core.system.entity.SysUser;
+import com.ad.core.system.mapper.SysUserMapper;
+import com.ad.core.system.service.SysUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 用户表 服务实现类
+ * </p>
+ *
+ * @author CoderYoung
+ * @since 2021-11-12
+ */
+@Service
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+
+    @Override
+    public SysUser getUserByUserId(String uid) {
+        List<SysUser> sysUsers = baseMapper.selectList(new QueryWrapper<SysUser>().eq("uid", uid));
+        if (sysUsers != null && sysUsers.size() > 0) {
+            return sysUsers.get(0);
+        }
+        return null;
+    }
+}

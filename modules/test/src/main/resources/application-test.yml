@@ -1,0 +1,5 @@
+#Spring Configuration
+app:
+  module:
+    test:
+      testconf: testconf

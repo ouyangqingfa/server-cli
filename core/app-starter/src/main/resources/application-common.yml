@@ -1,0 +1,49 @@
+#System Configuration
+server:
+  port: 18777
+  compression:
+    enabled: true
+    mime-types:
+      - application/json
+      - application/xml
+      - text/html
+      - text/xml
+      - text/plain
+    min-response-size: 10KB
+#Spring Configuration
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+  redis:
+    host: localhost
+    port: 6379
+    expireTime: 3600000 #sconds
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    clickhouse:
+      driverClassName: ru.yandex.clickhouse.ClickHouseDriver
+      url: jdbc:clickhouse://192.168.4.223:8123/adts
+      username: default
+      password: 123456
+      initialSize: 10
+      maxActive: 100
+      minIdle: 10
+      maxWait: 6000
+    mysql:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.4.223:3306/adserver?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      initialSize: 1
+      minIdle: 3
+      maxActive: 20
+      maxWait: 60000
+#MyBatis Configuration
+mybatis-plus:
+  mapper-locations: classpath:com/ad/*/mapper/**/*.xml
+#Custom Configuration
+app:
+
+
