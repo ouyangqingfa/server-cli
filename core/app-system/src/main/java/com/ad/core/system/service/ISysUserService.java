@@ -9,16 +9,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public interface SysUserService extends IService<SysUser> {
-
+public interface ISysUserService extends IService<SysUser> {
     /**
-     * 根据用户账号获取信息
+     * 根据ID获取用户信息
      *
      * @param uid
      * @return
      */
     SysUser getUserByUserId(String uid);
-
 }

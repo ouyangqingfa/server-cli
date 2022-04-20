@@ -22,8 +22,6 @@ public class AppEhCache implements IAppCache {
     private static final int EHCACHE_HEAP_SIZE = 100;
 
     private final CacheManager cacheManager;
-    private final List<String> cacheGroupList;
-    private Cache<String, Object> cache;
 
     public AppEhCache() {
         cacheManager = CacheManagerBuilder.newCacheManagerBuilder().withCache("defaultCache",
@@ -31,60 +29,62 @@ public class AppEhCache implements IAppCache {
                         .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofHours(1)))
         ).build();
         cacheManager.init();
-        cacheGroupList = new ArrayList<>();
     }
 
-    @Override
-    public void setGroup(String group) {
-        if (!cacheGroupList.contains(group)) {
-            cache = cacheManager.createCache(group,
+
+    private final Map<String, Cache<String, Object>> cacheMap = new HashMap<>();
+
+    private Cache<String, Object> getCache(String group) {
+        if (cacheMap.containsKey(group)) {
+            return cacheMap.get(group);
+        } else {
+            Cache<String, Object> cache = cacheManager.createCache(group,
                     CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, Object.class, ResourcePoolsBuilder.heap(EHCACHE_HEAP_SIZE))
                             .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofHours(1)))
             );
-            cacheGroupList.add(group);
-        } else {
-            cache = cacheManager.getCache(group, String.class, Object.class);
+            cacheMap.put(group, cache);
+            return cache;
         }
     }
 
     @Override
-    public void put(String key, Object val) {
-        cache.put(key, val);
+    public void put(String group, String key, Object val) {
+        getCache(group).put(key, val);
     }
 
     @Override
-    public Object get(String key) {
-        return cache.get(key);
+    public Object get(String group, String key) {
+        return getCache(group).get(key);
     }
 
     @Override
-    public void remove(String key) {
-        cache.remove(key);
+    public void remove(String group, String key) {
+        getCache(group).remove(key);
     }
 
     @Override
-    public void clear() {
-        cache.clear();
+    public void clear(String group) {
+        getCache(group).clear();
     }
 
     @Override
-    public int size() {
+    public int size(String group) {
         return 0;
     }
 
     @Override
-    public Set<String> keys() {
+    public Set<String> keys(String group) {
         Set<String> keys = new HashSet<>();
-        for (Cache.Entry<String, Object> entry : cache) {
+        for (Cache.Entry<String, Object> entry : getCache(group)) {
             keys.add(entry.getKey());
         }
         return keys;
     }
 
     @Override
-    public Collection<?> values() {
+    public Collection<?> values(String group) {
         Collection<Object> values = new HashSet<>();
-        for (Cache.Entry<String, Object> entry : cache) {
+        for (Cache.Entry<String, Object> entry : getCache(group)) {
             values.add(entry.getValue());
         }
         return values;

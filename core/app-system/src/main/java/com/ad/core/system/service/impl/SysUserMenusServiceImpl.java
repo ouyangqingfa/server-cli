@@ -2,7 +2,7 @@ package com.ad.core.system.service.impl;
 
 import com.ad.core.system.entity.SysUserMenus;
 import com.ad.core.system.mapper.SysUserMenusMapper;
-import com.ad.core.system.service.SysUserMenusService;
+import com.ad.core.system.service.ISysUserMenusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
 @Service
-public class SysUserMenusServiceImpl extends ServiceImpl<SysUserMenusMapper, SysUserMenus> implements SysUserMenusService {
+public class SysUserMenusServiceImpl extends ServiceImpl<SysUserMenusMapper, SysUserMenus> implements ISysUserMenusService {
 
 }

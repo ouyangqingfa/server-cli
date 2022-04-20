@@ -2,7 +2,7 @@ package com.ad.core.system.service.impl;
 
 import com.ad.core.system.entity.SysUserRole;
 import com.ad.core.system.mapper.SysUserRoleMapper;
-import com.ad.core.system.service.SysUserRoleService;
+import com.ad.core.system.service.ISysUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements ISysUserRoleService {
 
 }

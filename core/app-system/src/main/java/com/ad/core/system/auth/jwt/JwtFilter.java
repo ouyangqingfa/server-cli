@@ -127,8 +127,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String token = this.getAuthzHeader(request);
         // 获取当前Token的帐号信息
         String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
-        // 判断Redis中RefreshToken是否存在
-        if (AppCacheUtil.group(Constant.APP_SHIRO_USER_CACHE).exists(account)) {
+        // 判断Cache中RefreshToken是否存在
+        if (AppCacheUtil.SHIRO_CACHE.exists(account)) {
             String newToken = JwtUtil.sign(account);
             this.getSubject(request, response).login(new JwtToken(newToken));
             HttpServletResponse httpServletResponse = WebUtils.toHttp(response);

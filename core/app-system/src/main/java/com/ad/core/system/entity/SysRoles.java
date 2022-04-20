@@ -1,9 +1,11 @@
 package com.ad.core.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
@@ -11,35 +13,28 @@ import java.io.Serializable;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public class SysRoles extends Model<SysRoles> {
+@TableName("sys_roles")
+@ApiModel(value = "SysRoles对象", description = "")
+public class SysRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 角色ID
-     */
+    @ApiModelProperty("角色ID")
     private String roleId;
 
-    /**
-     * 角色名称
-     */
+    @ApiModelProperty("角色名称")
     private String name;
 
-    /**
-     * 状态
-     */
+    @ApiModelProperty("状态")
     private Integer status;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty("备注")
     private String remarks;
-
 
     public Integer getId() {
         return id;
@@ -48,7 +43,6 @@ public class SysRoles extends Model<SysRoles> {
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getRoleId() {
         return roleId;
     }
@@ -56,7 +50,6 @@ public class SysRoles extends Model<SysRoles> {
     public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
-
     public String getName() {
         return name;
     }
@@ -64,7 +57,6 @@ public class SysRoles extends Model<SysRoles> {
     public void setName(String name) {
         this.name = name;
     }
-
     public Integer getStatus() {
         return status;
     }
@@ -72,7 +64,6 @@ public class SysRoles extends Model<SysRoles> {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
     public String getRemarks() {
         return remarks;
     }
@@ -82,18 +73,13 @@ public class SysRoles extends Model<SysRoles> {
     }
 
     @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
     public String toString() {
         return "SysRoles{" +
-        "id=" + id +
-        ", roleId=" + roleId +
-        ", name=" + name +
-        ", status=" + status +
-        ", remarks=" + remarks +
+            "id=" + id +
+            ", roleId=" + roleId +
+            ", name=" + name +
+            ", status=" + status +
+            ", remarks=" + remarks +
         "}";
     }
 }

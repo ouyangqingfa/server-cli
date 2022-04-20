@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public interface SysUserMenusService extends IService<SysUserMenus> {
+public interface ISysUserMenusService extends IService<SysUserMenus> {
 
 }

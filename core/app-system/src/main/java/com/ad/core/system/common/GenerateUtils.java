@@ -13,11 +13,10 @@ public class GenerateUtils {
         new com.ad.common.generate.GenerateUtils().generateTableCode(
                 tables,
                 outPath,
-                "com.ad.core.system",
+                "com.ad.core", "system",
                 "jdbc:mysql://192.168.4.223:3306/adserver?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC",
                 "root",
                 "123456");
-
     }
 
 }

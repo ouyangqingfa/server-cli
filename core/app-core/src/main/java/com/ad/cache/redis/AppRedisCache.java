@@ -22,51 +22,45 @@ public class AppRedisCache implements IAppCache {
         this.redisCache = redisTemplate;
     }
 
-    private String prefix = "";
 
-    private String getKey(String key) {
-        return prefix + "_" + key;
+    private String getKey(String group, String key) {
+        return group + "_" + key;
     }
 
     @Override
-    public void setGroup(String group) {
-        prefix = group;
+    public void put(String group, String key, Object val) {
+        redisCache.opsForValue().set(getKey(group, key), val);
     }
 
     @Override
-    public void put(String key, Object val) {
-        redisCache.opsForValue().set(getKey(key), val);
+    public Object get(String group, String key) {
+        return redisCache.opsForValue().get(getKey(group, key));
     }
 
     @Override
-    public Object get(String key) {
-        return redisCache.opsForValue().get(getKey(key));
+    public void remove(String group, String key) {
+        redisCache.delete(getKey(group, key));
     }
 
     @Override
-    public void remove(String key) {
-        redisCache.delete(getKey(key));
+    public void clear(String group) {
+        redisCache.delete(this.keys(group));
     }
 
     @Override
-    public void clear() {
-        redisCache.delete(this.keys());
+    public int size(String group) {
+        return redisCache.keys(group + "*").size();
     }
 
     @Override
-    public int size() {
-        return redisCache.keys(prefix + "*").size();
+    public Set<String> keys(String group) {
+        return redisCache.keys(group + "*");
     }
 
     @Override
-    public Set<String> keys() {
-        return redisCache.keys(prefix + "*");
-    }
-
-    @Override
-    public Collection<?> values() {
+    public Collection<?> values(String group) {
         Collection<Object> collection = new HashSet<>();
-        Set<String> keys = this.keys();
+        Set<String> keys = this.keys(group);
         ValueOperations ops = redisCache.opsForValue();
         for (String s : keys) {
             collection.add(ops.get(s));

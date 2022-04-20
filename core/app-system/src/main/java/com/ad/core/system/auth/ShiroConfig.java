@@ -1,9 +1,12 @@
 package com.ad.core.system.auth;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import com.ad.core.system.auth.filter.CorsFilter;
 import com.ad.core.system.auth.cache.ShiroCacheManager;
 import com.ad.core.system.auth.jwt.JwtFilter;
 import com.ad.core.system.auth.shiro.ShiroRealm;
+import com.alibaba.fastjson.JSONArray;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -11,6 +14,8 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +32,8 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 配置使用自定义Realm，关闭Shiro自带的session
@@ -95,10 +102,36 @@ public class ShiroConfig {
         // 登录接口放开
         filterChainDefinitionMap.put("/api/system/getRSAKey", "anon");
         filterChainDefinitionMap.put("/api/system/login", "anon");
+        addExtraWhiteList(filterChainDefinitionMap);
         // 所有请求通过我们自己的JWTFilter
         filterChainDefinitionMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return factoryBean;
+    }
+
+    /**
+     * 额外配置的放行白名单
+     *
+     * @param whiteMap
+     */
+    private void addExtraWhiteList(LinkedHashMap<String, String> whiteMap) {
+        try {
+            String extraStr = ResourceUtil.readUtf8Str("whiteList.json");
+            if (StringUtils.isNotBlank(extraStr)) {
+                JSONArray array = JSONArray.parseArray(extraStr);
+                if (array != null && array.size() > 0) {
+                    for (int i = 0; i < array.size(); i++) {
+                        String url = array.getString(i);
+                        if (StringUtils.isNotBlank(url)) {
+                            whiteMap.put(url, "anon");
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("接口放行白名单加载失败-{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Bean(name = "basicHttpAuthenticationFilter")

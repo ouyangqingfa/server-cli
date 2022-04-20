@@ -1,11 +1,11 @@
 package com.ad.cache;
 
 import com.ad.cache.ehcache.AppEhCache;
-import com.ad.cache.redis.AppRedisCache;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,74 +14,79 @@ import java.util.Set;
 @Component
 public class AppCacheUtil {
 
-    private static final AppCache cache = new AppCache();
+    private static final IAppCache CACHE_MANAGER = new AppEhCache();
 
-    public static AppCache group(String gName) {
-        cache.setGroup(gName);
-        return cache;
+    public static final String CACHE_SHIRO_TOKEN_KEY = "shiroTokenCache";
+    public static final String CACHE_SHIRO_USER = "shiro_user_cache";
+    public static final String CACHE_USER_KEY = "userCache";
+
+    private static final Map<String, AppCache> CACHE_GROUPS_MAP = new HashMap<>();
+
+    public static final AppCache USER_CACHE = new AppCache(CACHE_MANAGER, CACHE_USER_KEY);
+    public static final AppCache SHIRO_CACHE = new AppCache(CACHE_MANAGER, CACHE_SHIRO_USER);
+    public static final AppCache TOKEN_CACHE = new AppCache(CACHE_MANAGER, CACHE_SHIRO_TOKEN_KEY);
+
+    static {
+        CACHE_GROUPS_MAP.put(CACHE_USER_KEY, USER_CACHE);
+        CACHE_GROUPS_MAP.put(CACHE_SHIRO_USER, SHIRO_CACHE);
+        CACHE_GROUPS_MAP.put(CACHE_SHIRO_TOKEN_KEY, TOKEN_CACHE);
     }
 
 
-    public static class AppCache implements IAppCache {
+    public static AppCache group(String gName) {
+        if (CACHE_GROUPS_MAP.containsKey(gName)) {
+            return CACHE_GROUPS_MAP.get(gName);
+        } else {
+            AppCache cache = new AppCache(CACHE_MANAGER, gName);
+            CACHE_GROUPS_MAP.put(gName, cache);
+            return cache;
+        }
+    }
 
-        private AppEhCache ehCache;
-        private AppRedisCache redisCache;
+    public static class AppCache {
 
-        private IAppCache getCache() {
-            if (ehCache == null) {
-                ehCache = new AppEhCache();
-            }
-            return ehCache;
+        private IAppCache cache;
+        private final String cacheGroup;
+
+        public AppCache(IAppCache _cache, String group) {
+            this.cacheGroup = group;
+            this.cache = _cache;
         }
 
-        @Override
-        public void setGroup(String group) {
-            getCache().setGroup(group);
-        }
-
-        @Override
         public void put(String key, Object val) {
-            getCache().put(key, val);
+            cache.put(cacheGroup, key, val);
         }
 
-        @Override
         public Object get(String key) {
-            return getCache().get(key);
+            return cache.get(cacheGroup, key);
         }
-
 
         public boolean exists(String key) {
             return this.get(key) != null;
         }
 
-        @Override
         public void remove(String key) {
-            getCache().remove(key);
+            cache.remove(cacheGroup, key);
         }
 
-        @Override
         public void clear() {
-            getCache().clear();
+            cache.clear(cacheGroup);
         }
 
-        @Override
         public int size() {
-            return getCache().size();
+            return cache.size(cacheGroup);
         }
 
-        @Override
         public Set<String> keys() {
-            return getCache().keys();
+            return cache.keys(cacheGroup);
         }
 
-        @Override
         public Collection<?> values() {
-            return getCache().values();
+            return cache.values(cacheGroup);
         }
 
-        @Override
         public void destroy() {
-            getCache().destroy();
+            cache.destroy();
         }
     }
 

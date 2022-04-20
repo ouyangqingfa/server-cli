@@ -1,7 +1,6 @@
 package com.ad.core.system.auth.jwt;
 
 import cn.hutool.core.codec.Base64;
-import com.ad.common.utils.Base64ConvertUtil;
 import com.ad.common.utils.DateEx;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.common.CustomException;
@@ -14,7 +13,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -81,7 +79,7 @@ public class JwtUtil {
         // 帐号加JWT私钥加密
         String secret = account + Base64.encode(ENCRYPT_JWT_KEY);
         Algorithm algorithm = Algorithm.HMAC256(secret);
-        // Token有效期-1天
+        // Token有效期 1天
         Date expireDate = new DateEx().addDay(1).getDate();
         // 附带account帐号信息
         return JWT.create()

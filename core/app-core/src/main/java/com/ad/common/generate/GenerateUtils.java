@@ -78,9 +78,9 @@ public class GenerateUtils {
 //        ag.execute();
 //    }
 
-
-    public void generateTableCode(String[] tables, String outPath, String basePkg, String mysqlUrl, String mysqlUser, String mysqlPwd) {
-        FastAutoGenerator.create(mysqlUrl, mysqlUser, mysqlPwd).globalConfig(builder -> {
+    public void generateTableCode(String[] tables, String outPath, String basePkg, String module, String mysqlUrl, String mysqlUser, String mysqlPwd) {
+        FastAutoGenerator.create(mysqlUrl, mysqlUser, mysqlPwd)
+                .globalConfig(builder -> {
                     builder.author("CoderYoung")
                             .enableSwagger()
                             .fileOverride()
@@ -88,6 +88,7 @@ public class GenerateUtils {
                             .outputDir(outPath);
                 }).packageConfig(builder -> {
                     builder.parent(basePkg) // 设置父包名
+                            .moduleName(module)
                             .mapper("mapper")
                             .service("service")
                             .serviceImpl("service.impl")

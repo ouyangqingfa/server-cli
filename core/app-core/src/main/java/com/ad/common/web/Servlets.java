@@ -1,6 +1,6 @@
 package com.ad.common.web;
 
-import com.ad.common.utils.Encodes;
+import cn.hutool.core.codec.Base64;
 import com.google.common.net.HttpHeaders;
 import org.apache.commons.lang3.Validate;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -180,7 +180,7 @@ public class Servlets {
      */
     public static String encodeHttpBasic(String userName, String password) {
         String encode = userName + ":" + password;
-        return "Basic " + Encodes.encodeBase64(encode.getBytes());
+        return "Basic " + Base64.encode(encode);
     }
 
     /**

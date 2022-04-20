@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @Api(tags = "${table.comment!}")
 @RestController
-@RequestMapping(value = "/api/${table.entityPath}")
+@RequestMapping(value = "/api<#if package.ModuleName?? && package.ModuleName ?length gt 0 >/${package.ModuleName}</#if>/${table.entityPath}")
 public class ${table.controllerName} extends BizController<${table.serviceName},${entity}> {
 
 }

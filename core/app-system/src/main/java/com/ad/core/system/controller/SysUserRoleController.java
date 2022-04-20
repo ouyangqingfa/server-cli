@@ -1,25 +1,21 @@
 package com.ad.core.system.controller;
 
-
-import com.ad.core.BaseController;
+import com.ad.core.BizController;
+import com.ad.core.system.service.ISysUserRoleService;
+import com.ad.core.system.entity.SysUserRole;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- * 用户角色(可能一个用户多个角色) 前端控制器
- * </p>
+ * 用户角色(可能一个用户多个角色)
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * Date  2022-04-20
  */
-@Api(tags = "系统管理")
+@Api(tags = "用户角色", description = "可能一个用户多个角色")
 @RestController
-@RequestMapping("/api/system/sysUserRole")
-public class SysUserRoleController extends BaseController {
+@RequestMapping(value = "/api/system/sysUserRole")
+public class SysUserRoleController extends BizController<ISysUserRoleService, SysUserRole> {
 
 }
-

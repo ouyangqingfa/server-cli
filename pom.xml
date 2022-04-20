@@ -196,6 +196,7 @@
                     <include>**/*.yml</include>
                     <include>**/*.ftl</include>
                     <include>**/*.xml</include>
+                    <include>**/*.json</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

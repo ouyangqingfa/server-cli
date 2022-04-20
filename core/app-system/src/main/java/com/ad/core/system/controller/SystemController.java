@@ -13,7 +13,7 @@ import com.ad.core.system.auth.cache.ShiroCache;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
-import com.ad.core.system.service.SysUserService;
+import com.ad.core.system.service.ISysUserService;
 import com.ad.core.system.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +36,7 @@ public class SystemController extends BaseController {
     private RSA rsa;
 
     @Resource
-    private SysUserService userService;
+    private ISysUserService userService;
 
     public SystemController() {
         this.buildRsa();
@@ -83,7 +83,7 @@ public class SystemController extends BaseController {
                     if (user.getPwd().equals(finalPwd)) {
                         UserVo userVo = Convert.convert(UserVo.class, user);
                         userVo.setToken(JwtUtil.sign(uid));
-                        AppCacheUtil.group(Constant.APP_SHIRO_USER_CACHE).put(uid, new DateEx().getSeconds());
+                        AppCacheUtil.SHIRO_CACHE.put(uid, new DateEx().getSeconds());
                         return buildResult(userVo);
                     } else {
                         return buildError(-3, "密码错误");
@@ -108,9 +108,9 @@ public class SystemController extends BaseController {
     public BaseResult<Boolean> logout(HttpServletRequest request, @RequestParam("uid") String uid) {
         String token = request.getHeader("Authorization");
         if (StringUtils.isNotEmpty(token)) {
-            AppCacheUtil.group(ShiroCache.SHIRO_CACHE_KEY).remove(token);
+            AppCacheUtil.TOKEN_CACHE.remove(token);
         }
-        AppCacheUtil.group(Constant.APP_SHIRO_USER_CACHE).remove(uid);
+        AppCacheUtil.SHIRO_CACHE.remove(uid);
         return buildResult(true);
     }
 

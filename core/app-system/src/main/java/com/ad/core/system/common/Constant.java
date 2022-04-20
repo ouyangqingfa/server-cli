@@ -48,7 +48,6 @@ public class Constant {
      */
     public static final String ACCOUNT = "account";
 
-    public static final String APP_SHIRO_USER_CACHE = "shiro_user_cache";
 
     /**
      * JWT-currentTimeMillis:

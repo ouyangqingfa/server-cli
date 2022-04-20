@@ -13,7 +13,8 @@ public class GenerateUtils {
         new com.ad.common.generate.GenerateUtils().generateTableCode(
                 tables,
                 outPath,
-                "com.ad.modules.test",
+                "com.ad.modules",
+                "test",
                 "jdbc:mysql://192.168.1.8:33336/allcmis?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC",
                 "root",
                 "123456");

@@ -16,45 +16,44 @@ import java.util.Set;
 @Service("adServerShiroCache")
 public class ShiroCache<K, V> implements Cache<K, V> {
 
-    public static final String SHIRO_CACHE_KEY = "shiroTokenCache";
 
     @Override
     public V get(K k) throws CacheException {
-        return (V) AppCacheUtil.group(SHIRO_CACHE_KEY).get(k.toString());
+        return (V) AppCacheUtil.TOKEN_CACHE.get(k.toString());
     }
 
     @Override
     public V put(K k, V v) throws CacheException {
-        AppCacheUtil.group(SHIRO_CACHE_KEY).put(k.toString(), v);
+        AppCacheUtil.TOKEN_CACHE.put(k.toString(), v);
         return v;
     }
 
     @Override
     public V remove(K k) throws CacheException {
         V v = get(k);
-        AppCacheUtil.group(SHIRO_CACHE_KEY).remove(k.toString());
+        AppCacheUtil.TOKEN_CACHE.remove(k.toString());
         return v;
     }
 
     @Override
     public void clear() throws CacheException {
-        AppCacheUtil.group(SHIRO_CACHE_KEY).clear();
+        AppCacheUtil.TOKEN_CACHE.clear();
     }
 
     @Override
     public int size() {
-        return AppCacheUtil.group(SHIRO_CACHE_KEY).size();
+        return AppCacheUtil.TOKEN_CACHE.size();
     }
 
     @Override
     public Set<K> keys() {
-        return (Set<K>) AppCacheUtil.group(SHIRO_CACHE_KEY).keys();
+        return (Set<K>) AppCacheUtil.TOKEN_CACHE.keys();
     }
 
     @Override
     public Collection<V> values() {
         Collection<V> values = new HashSet<>();
-        for (Object value : AppCacheUtil.group(SHIRO_CACHE_KEY).values()) {
+        for (Object value : AppCacheUtil.TOKEN_CACHE.values()) {
             values.add((V) value);
         }
         return values;

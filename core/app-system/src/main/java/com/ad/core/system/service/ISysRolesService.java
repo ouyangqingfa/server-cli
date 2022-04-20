@@ -1,6 +1,6 @@
 package com.ad.core.system.service;
 
-import com.ad.core.system.entity.SysMenus;
+import com.ad.core.system.entity.SysRoles;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public interface SysMenusService extends IService<SysMenus> {
+public interface ISysRolesService extends IService<SysRoles> {
 
 }

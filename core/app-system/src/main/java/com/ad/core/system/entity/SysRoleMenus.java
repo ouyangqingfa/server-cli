@@ -1,10 +1,12 @@
 package com.ad.core.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
@@ -12,50 +14,37 @@ import java.io.Serializable;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public class SysRoleMenus extends Model<SysRoleMenus> {
+@TableName("sys_role_menus")
+@ApiModel(value = "SysRoleMenus对象", description = "角色菜单")
+public class SysRoleMenus implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 角色id
-     */
+    @ApiModelProperty("角色id")
     private String roleId;
 
-    /**
-     * 菜单ID
-     */
+    @ApiModelProperty("菜单ID")
     private String menuId;
 
-    /**
-     * 状态控制
-     */
+    @ApiModelProperty("状态控制")
     private Integer status;
 
-    /**
-     * 菜单排序
-     */
+    @ApiModelProperty("菜单排序")
     private Integer sort;
 
-    /**
-     * 创建人
-     */
+    @ApiModelProperty("创建人")
     private String creator;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty("备注")
     private String remarks;
-
 
     public Integer getId() {
         return id;
@@ -64,7 +53,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getRoleId() {
         return roleId;
     }
@@ -72,7 +60,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
-
     public String getMenuId() {
         return menuId;
     }
@@ -80,7 +67,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setMenuId(String menuId) {
         this.menuId = menuId;
     }
-
     public Integer getStatus() {
         return status;
     }
@@ -88,7 +74,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
     public Integer getSort() {
         return sort;
     }
@@ -96,7 +81,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setSort(Integer sort) {
         this.sort = sort;
     }
-
     public String getCreator() {
         return creator;
     }
@@ -104,7 +88,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setCreator(String creator) {
         this.creator = creator;
     }
-
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -112,7 +95,6 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
-
     public String getRemarks() {
         return remarks;
     }
@@ -122,21 +104,16 @@ public class SysRoleMenus extends Model<SysRoleMenus> {
     }
 
     @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
     public String toString() {
         return "SysRoleMenus{" +
-        "id=" + id +
-        ", roleId=" + roleId +
-        ", menuId=" + menuId +
-        ", status=" + status +
-        ", sort=" + sort +
-        ", creator=" + creator +
-        ", createTime=" + createTime +
-        ", remarks=" + remarks +
+            "id=" + id +
+            ", roleId=" + roleId +
+            ", menuId=" + menuId +
+            ", status=" + status +
+            ", sort=" + sort +
+            ", creator=" + creator +
+            ", createTime=" + createTime +
+            ", remarks=" + remarks +
         "}";
     }
 }

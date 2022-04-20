@@ -1,25 +1,20 @@
 package com.ad.core.system.controller;
 
-
-import com.ad.core.BaseController;
+import com.ad.core.BizController;
+import com.ad.core.system.service.ISysUserMenusService;
+import com.ad.core.system.entity.SysUserMenus;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- * 用户额外的菜单权限 前端控制器
- * </p>
- *
- * @author CoderYoung
- * @since 2021-11-12
- */
-@Api(tags = "系统管理")
+* 用户额外的菜单权限
+* @author CoderYoung
+* Date  2022-04-20
+*/
+@Api(tags = "用户额外的菜单权限")
 @RestController
-@RequestMapping("/api/system/sysUserMenus")
-public class SysUserMenusController extends BaseController {
+@RequestMapping(value = "/api/system/sysUserMenus")
+public class SysUserMenusController extends BizController<ISysUserMenusService,SysUserMenus> {
 
 }
-

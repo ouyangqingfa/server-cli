@@ -1,9 +1,11 @@
 package com.ad.core.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
@@ -11,60 +13,43 @@ import java.io.Serializable;
  * </p>
  *
  * @author CoderYoung
- * @since 2021-11-12
+ * @since 2022-04-20
  */
-public class SysMenus extends Model<SysMenus> {
+@TableName("sys_menus")
+@ApiModel(value = "SysMenus对象", description = "")
+public class SysMenus implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    /**
-     * 菜单ID
-     */
+    @ApiModelProperty("菜单ID")
     private String menuId;
 
-    /**
-     * 父菜单ID
-     */
+    @ApiModelProperty("父菜单ID")
     private String pid;
 
-    /**
-     * 菜单标识
-     */
+    @ApiModelProperty("菜单标识")
     private String key;
 
-    /**
-     * 菜单名称
-     */
+    @ApiModelProperty("菜单名称")
     private String title;
 
-    /**
-     * 菜单图标
-     */
+    @ApiModelProperty("菜单图标")
     private String icon;
 
-    /**
-     * 组件路径-前端一致
-     */
+    @ApiModelProperty("组件路径-前端一致")
     private String component;
 
-    /**
-     * 排序
-     */
+    @ApiModelProperty("排序")
     private Integer sort;
 
-    /**
-     * 状态控制
-     */
+    @ApiModelProperty("状态控制")
     private Integer status;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty("备注")
     private String remarks;
-
 
     public Integer getId() {
         return id;
@@ -73,7 +58,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getMenuId() {
         return menuId;
     }
@@ -81,7 +65,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setMenuId(String menuId) {
         this.menuId = menuId;
     }
-
     public String getPid() {
         return pid;
     }
@@ -89,7 +72,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setPid(String pid) {
         this.pid = pid;
     }
-
     public String getKey() {
         return key;
     }
@@ -97,7 +79,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setKey(String key) {
         this.key = key;
     }
-
     public String getTitle() {
         return title;
     }
@@ -105,7 +86,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getIcon() {
         return icon;
     }
@@ -113,7 +93,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setIcon(String icon) {
         this.icon = icon;
     }
-
     public String getComponent() {
         return component;
     }
@@ -121,7 +100,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setComponent(String component) {
         this.component = component;
     }
-
     public Integer getSort() {
         return sort;
     }
@@ -129,7 +107,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setSort(Integer sort) {
         this.sort = sort;
     }
-
     public Integer getStatus() {
         return status;
     }
@@ -137,7 +114,6 @@ public class SysMenus extends Model<SysMenus> {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
     public String getRemarks() {
         return remarks;
     }
@@ -147,23 +123,18 @@ public class SysMenus extends Model<SysMenus> {
     }
 
     @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
     public String toString() {
         return "SysMenus{" +
-        "id=" + id +
-        ", menuId=" + menuId +
-        ", pid=" + pid +
-        ", key=" + key +
-        ", title=" + title +
-        ", icon=" + icon +
-        ", component=" + component +
-        ", sort=" + sort +
-        ", status=" + status +
-        ", remarks=" + remarks +
+            "id=" + id +
+            ", menuId=" + menuId +
+            ", pid=" + pid +
+            ", key=" + key +
+            ", title=" + title +
+            ", icon=" + icon +
+            ", component=" + component +
+            ", sort=" + sort +
+            ", status=" + status +
+            ", remarks=" + remarks +
         "}";
     }
 }

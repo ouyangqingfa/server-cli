@@ -1,10 +1,11 @@
 package com.ad.core.system.auth.shiro;
 
+import com.ad.cache.AppCacheUtil;
 import com.ad.core.system.auth.jwt.JwtToken;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
-import com.ad.core.system.service.SysUserService;
+import com.ad.core.system.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -27,7 +28,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Resource
     @Lazy
-    private SysUserService userService;
+    private ISysUserService userService;
 
     @Override
     public boolean supports(AuthenticationToken authenticationToken) {
@@ -71,7 +72,14 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户名或者密码错误");
         }
 
-        SysUser userInfo = userService.getUserByUserId(account);
+        //加入缓存用户信息
+        SysUser userInfo = (SysUser) AppCacheUtil.USER_CACHE.get(account);
+        if (userInfo == null) {
+            userInfo = userService.getUserByUserId(account);
+            if (userInfo != null) {
+                AppCacheUtil.USER_CACHE.put(account, userInfo);
+            }
+        }
         if (userInfo == null) {
             throw new AuthenticationException("该帐号不存在(The account does not exist.)");
         }

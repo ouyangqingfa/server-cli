@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @Api(tags = "")
 @RestController
-@RequestMapping(value = "/api/tdTag")
+@RequestMapping(value = "/api/test/tdTag")
 public class TdTagController extends BizController<ITdTagService,TdTag> {
 
 }

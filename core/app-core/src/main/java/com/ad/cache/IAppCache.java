@@ -9,19 +9,12 @@ import java.util.Set;
 public interface IAppCache {
 
     /**
-     * 当前操作的缓存分组
-     *
-     * @param group
-     */
-    void setGroup(String group);
-
-    /**
      * put
      *
      * @param key
      * @param val
      */
-    void put(String key, Object val);
+    void put(String group, String key, Object val);
 
     /**
      * get
@@ -29,40 +22,40 @@ public interface IAppCache {
      * @param key
      * @return
      */
-    Object get(String key);
+    Object get(String group, String key);
 
     /**
      * remove
      *
      * @param key
      */
-    void remove(String key);
+    void remove(String group, String key);
 
     /**
      * clear
      */
-    void clear();
+    void clear(String group);
 
     /**
      * size
      *
      * @return
      */
-    int size();
+    int size(String group);
 
     /**
      * keys
      *
      * @return
      */
-    Set<String> keys();
+    Set<String> keys(String group);
 
     /**
      * values
      *
      * @return
      */
-    Collection<?> values();
+    Collection<?> values(String group);
 
     /**
      * 关闭释放缓存
