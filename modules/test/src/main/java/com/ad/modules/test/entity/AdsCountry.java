@@ -60,7 +60,7 @@ public class AdsCountry extends Model<AdsCountry> {
     }
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

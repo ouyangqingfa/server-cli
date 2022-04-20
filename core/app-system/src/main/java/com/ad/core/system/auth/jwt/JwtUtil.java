@@ -1,5 +1,6 @@
 package com.ad.core.system.auth.jwt;
 
+import cn.hutool.core.codec.Base64;
 import com.ad.common.utils.Base64ConvertUtil;
 import com.ad.common.utils.DateEx;
 import com.ad.core.system.common.Constant;
@@ -40,7 +41,7 @@ public class JwtUtil {
     public static int verify(String token) {
         try {
             // 帐号加JWT私钥解密
-            String secret = getClaim(token, Constant.ACCOUNT) + Base64ConvertUtil.decode(ENCRYPT_JWT_KEY);
+            String secret = getClaim(token, Constant.ACCOUNT) + Base64.encode(ENCRYPT_JWT_KEY);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
@@ -77,20 +78,16 @@ public class JwtUtil {
      * @return java.lang.String 返回加密的Token
      */
     public static String sign(String account) {
-        try {
-            // 帐号加JWT私钥加密
-            String secret = account + Base64ConvertUtil.decode(ENCRYPT_JWT_KEY);
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            // Token有效期-1天
-            Date expireDate = new DateEx().addDay(1).getDate();
-            // 附带account帐号信息
-            return JWT.create()
-                    .withClaim("account", account)
-                    .withClaim("currentTimeMillis", System.currentTimeMillis())
-                    .withExpiresAt(expireDate)
-                    .sign(algorithm);
-        } catch (UnsupportedEncodingException e) {
-            throw new CustomException("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
-        }
+        // 帐号加JWT私钥加密
+        String secret = account + Base64.encode(ENCRYPT_JWT_KEY);
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        // Token有效期-1天
+        Date expireDate = new DateEx().addDay(1).getDate();
+        // 附带account帐号信息
+        return JWT.create()
+                .withClaim("account", account)
+                .withClaim("currentTimeMillis", System.currentTimeMillis())
+                .withExpiresAt(expireDate)
+                .sign(algorithm);
     }
 }

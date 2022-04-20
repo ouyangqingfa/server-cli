@@ -58,7 +58,7 @@ public class DataSourceClickHouseConfig {
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
-        configuration.setUseDeprecatedExecutor(false);
+//        configuration.setUseDeprecatedExecutor(false);
         bean.setConfiguration(configuration);
 
         bean.setGlobalConfig(new GlobalConfig().setBanner(false));

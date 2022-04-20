@@ -147,7 +147,7 @@ public class SysMenus extends Model<SysMenus> {
     }
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

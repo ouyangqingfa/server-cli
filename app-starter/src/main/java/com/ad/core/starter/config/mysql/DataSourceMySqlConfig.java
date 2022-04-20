@@ -4,7 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
@@ -64,7 +63,7 @@ public class DataSourceMySqlConfig {
         bean.setConfiguration(configuration);
 
         bean.setGlobalConfig(new GlobalConfig().setBanner(false));
-        bean.setPlugins(new PaginationInterceptor());
+//        bean.setPlugins(new PaginationInterceptor());
         return bean.getObject();
     }
 

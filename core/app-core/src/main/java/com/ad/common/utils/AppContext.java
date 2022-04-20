@@ -7,16 +7,16 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.util.Map;
+
 /**
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicationContext.
- *
- * @author caizk
  */
 public class AppContext implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext = null;
 
-    private static Logger logger = LoggerFactory.getLogger(AppContext.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppContext.class);
 
     /**
      * 取得存储在静态变量中的ApplicationContext.
@@ -41,6 +41,14 @@ public class AppContext implements ApplicationContextAware, DisposableBean {
     public static <T> T getBean(Class<T> requiredType) {
         assertContextInjected();
         return applicationContext.getBean(requiredType);
+    }
+
+    public static <T> Map<String, T> getBeans(Class<T> type) {
+        if (applicationContext != null) {
+            return applicationContext.getBeansOfType(type);
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -1,10 +1,11 @@
 package com.ad.common.tools;
 
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -177,7 +178,7 @@ public class LocalFileUtils {
         File file = new File(path);
         try {
             if (file.isFile() && file.exists()) {
-                InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);
+                InputStreamReader read = new InputStreamReader(Files.newInputStream(file.toPath()), encoding);
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String line = null;
                 while ((line = bufferedReader.readLine()) != null) {
@@ -210,31 +211,23 @@ public class LocalFileUtils {
      * @throws IOException
      */
     public static String getZipContent(String path) {
-        StringBuffer resultBuffer = new StringBuffer();
+        StringBuilder resultBuffer = new StringBuilder();
         ZipInputStream zin = null;
         ZipFile zf = null;
         try {
             zf = new ZipFile(path);
-            InputStream in = new BufferedInputStream(new FileInputStream(path));
-            Charset utf8 = Charset.forName("utf-8");
-            zin = new ZipInputStream(in, utf8);
+            InputStream in = new BufferedInputStream(Files.newInputStream(Paths.get(path)));
+            zin = new ZipInputStream(in, StandardCharsets.UTF_8);
             ZipEntry ze;
             if ((ze = zin.getNextEntry()) != null) {
                 if (ze.toString().endsWith("json")) {
-                    BufferedReader br = null;
-                    try {
-//                        br = new BufferedReader(new InputStreamReader(zf.getInputStream(ze)));
-                        br = new BufferedReader(new InputStreamReader(zin));
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(zin))) {
                         String line;
                         while ((line = br.readLine()) != null) {
-                            resultBuffer.append(line + "\n");
+                            resultBuffer.append(line).append("\n");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } finally {
-                        if (br != null) {
-                            br.close();
-                        }
                     }
                 }
             }

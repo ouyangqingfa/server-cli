@@ -109,7 +109,7 @@ public class SysUserRole extends Model<SysUserRole> {
     }
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 
