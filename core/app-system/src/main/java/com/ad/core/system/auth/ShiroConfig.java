@@ -96,9 +96,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-ui/", "anon");
         filterChainDefinitionMap.put("/doc.html", "anon");
         // 公开接口
         filterChainDefinitionMap.put("/api/open/**", "anon");
+        filterChainDefinitionMap.put("/api/dev/**", "anon");
         // 登录接口放开
         filterChainDefinitionMap.put("/api/system/getRSAKey", "anon");
         filterChainDefinitionMap.put("/api/system/login", "anon");

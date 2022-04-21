@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "spring.datasource.mysql")
-//@PropertySource("classpath:application.yml")
 public class MySqlParamConfig {
 
     private String driverClassName;

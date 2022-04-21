@@ -46,6 +46,16 @@ public class DateEx {
         return this;
     }
 
+    public DateEx addMonth(int months) {
+        calendar.add(Calendar.MONTH, months);
+        return this;
+    }
+
+    public DateEx addYear(int years) {
+        calendar.add(Calendar.YEAR, years);
+        return this;
+    }
+
     public DateEx getStartOfDay() {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

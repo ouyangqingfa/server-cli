@@ -1,7 +1,6 @@
 package com.ad.cache;
 
 import com.ad.cache.ehcache.AppEhCache;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Set;
 /**
  * @author CoderYoung
  */
-@Component
 public class AppCacheUtil {
 
     private static final IAppCache CACHE_MANAGER = new AppEhCache();

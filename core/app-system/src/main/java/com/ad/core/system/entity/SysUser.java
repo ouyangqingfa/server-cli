@@ -3,8 +3,11 @@ package com.ad.core.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -31,6 +34,7 @@ public class SysUser implements Serializable {
     @ApiModelProperty("用户名称")
     private String uname;
 
+    @JsonIgnore
     @ApiModelProperty("用户密码")
     private String pwd;
 
@@ -58,6 +62,7 @@ public class SysUser implements Serializable {
     @ApiModelProperty("头像")
     private String avatar;
 
+    @JsonIgnore
     @ApiModelProperty("签名")
     private String sign;
 
@@ -83,6 +88,7 @@ public class SysUser implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getUid() {
         return uid;
     }
@@ -90,6 +96,7 @@ public class SysUser implements Serializable {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
     public String getUname() {
         return uname;
     }
@@ -97,6 +104,7 @@ public class SysUser implements Serializable {
     public void setUname(String uname) {
         this.uname = uname;
     }
+
     public String getPwd() {
         return pwd;
     }
@@ -104,6 +112,7 @@ public class SysUser implements Serializable {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
+
     public String getCompany() {
         return company;
     }
@@ -111,6 +120,7 @@ public class SysUser implements Serializable {
     public void setCompany(String company) {
         this.company = company;
     }
+
     public String getDepartment() {
         return department;
     }
@@ -118,6 +128,7 @@ public class SysUser implements Serializable {
     public void setDepartment(String department) {
         this.department = department;
     }
+
     public String getJob() {
         return job;
     }
@@ -125,6 +136,7 @@ public class SysUser implements Serializable {
     public void setJob(String job) {
         this.job = job;
     }
+
     public Integer getSno() {
         return sno;
     }
@@ -132,6 +144,7 @@ public class SysUser implements Serializable {
     public void setSno(Integer sno) {
         this.sno = sno;
     }
+
     public String getIdNum() {
         return idNum;
     }
@@ -139,6 +152,7 @@ public class SysUser implements Serializable {
     public void setIdNum(String idNum) {
         this.idNum = idNum;
     }
+
     public String getEmail() {
         return email;
     }
@@ -146,6 +160,7 @@ public class SysUser implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getPhone() {
         return phone;
     }
@@ -153,6 +168,7 @@ public class SysUser implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getAvatar() {
         return avatar;
     }
@@ -160,6 +176,7 @@ public class SysUser implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     public String getSign() {
         return sign;
     }
@@ -167,6 +184,7 @@ public class SysUser implements Serializable {
     public void setSign(String sign) {
         this.sign = sign;
     }
+
     public LocalDateTime getRegDate() {
         return regDate;
     }
@@ -174,6 +192,7 @@ public class SysUser implements Serializable {
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
     }
+
     public Integer getStatus() {
         return status;
     }
@@ -181,6 +200,7 @@ public class SysUser implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     public String getCreator() {
         return creator;
     }
@@ -188,6 +208,7 @@ public class SysUser implements Serializable {
     public void setCreator(String creator) {
         this.creator = creator;
     }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -195,6 +216,7 @@ public class SysUser implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
+
     public String getRemark() {
         return remark;
     }
@@ -206,24 +228,24 @@ public class SysUser implements Serializable {
     @Override
     public String toString() {
         return "SysUser{" +
-            "id=" + id +
-            ", uid=" + uid +
-            ", uname=" + uname +
-            ", pwd=" + pwd +
-            ", company=" + company +
-            ", department=" + department +
-            ", job=" + job +
-            ", sno=" + sno +
-            ", idNum=" + idNum +
-            ", email=" + email +
-            ", phone=" + phone +
-            ", avatar=" + avatar +
-            ", sign=" + sign +
-            ", regDate=" + regDate +
-            ", status=" + status +
-            ", creator=" + creator +
-            ", createTime=" + createTime +
-            ", remark=" + remark +
-        "}";
+                "id=" + id +
+                ", uid=" + uid +
+                ", uname=" + uname +
+                ", pwd=" + pwd +
+                ", company=" + company +
+                ", department=" + department +
+                ", job=" + job +
+                ", sno=" + sno +
+                ", idNum=" + idNum +
+                ", email=" + email +
+                ", phone=" + phone +
+                ", avatar=" + avatar +
+                ", sign=" + sign +
+                ", regDate=" + regDate +
+                ", status=" + status +
+                ", creator=" + creator +
+                ", createTime=" + createTime +
+                ", remark=" + remark +
+                "}";
     }
 }

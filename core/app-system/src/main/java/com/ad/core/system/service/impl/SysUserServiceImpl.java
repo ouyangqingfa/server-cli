@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
+
     @Override
     public SysUser getUserByUserId(String uid) {
         List<SysUser> sysUsers = baseMapper.selectList(new QueryWrapper<SysUser>().eq("uid", uid));
@@ -27,4 +28,5 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         return null;
     }
+
 }

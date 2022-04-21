@@ -16,7 +16,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableCaching
 @SpringBootApplication
 @EnableConfigurationProperties
-@ComponentScan(basePackages = {"com.ad.core", "com.ad.cache", "com.ad.modules"})
+@ComponentScan(basePackages = {"com.ad.core", "com.ad.modules"})
 public class MainApplication {
 
     public static void main(String[] args) {

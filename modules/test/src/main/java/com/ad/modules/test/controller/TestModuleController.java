@@ -1,9 +1,7 @@
 package com.ad.modules.test.controller;
 
+import com.ad.core.BaseController;
 import com.ad.core.BaseResult;
-import com.ad.core.BizController;
-import com.ad.modules.test.entity.AdsCountry;
-import com.ad.modules.test.service.AdsCountryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "adsCountry")
 @RestController
 @RequestMapping("/adsCountry")
-public class AdsCountryController extends BizController<AdsCountryService, AdsCountry> {
+public class TestModuleController extends BaseController {
 
     @ApiOperation("helloWorld")
     @GetMapping("helloWorld")
