@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
@@ -27,11 +28,16 @@ import javax.sql.DataSource;
  * @author CoderYoung
  */
 @Configuration
-@MapperScan(basePackages = {"com.ad.core.system.mapper", "com.ad.modules.*.mapper"}, sqlSessionFactoryRef = "MySqlSessionFactory")
+@MapperScan(basePackages = {"com.ad.core.system.mapper", "com.ad.modules.**.mapper"}, sqlSessionFactoryRef = "MySqlSessionFactory")
 public class DataSourceMySqlConfig {
 
     @Resource
     private MySqlParamConfig mySqlParamConfig;
+
+    @PostConstruct
+    public void setProperties() {
+        System.setProperty("druid.mysql.usePingMethod", "false");
+    }
 
     @Bean(name = "MySqlDataSource")
     @Primary

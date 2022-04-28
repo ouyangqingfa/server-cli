@@ -13,7 +13,7 @@ server:
 #Spring Configuration
 spring:
   profiles:
-    active: dev
+    active: config
   servlet:
     multipart:
       max-file-size: 50MB
@@ -24,15 +24,15 @@ spring:
     expireTime: 3600000 #sconds
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    clickhouse:
-      driverClassName: ru.yandex.clickhouse.ClickHouseDriver
-      url: jdbc:clickhouse://192.168.4.223:8123/adts
-      username: default
-      password: 123456
-      initialSize: 10
-      maxActive: 100
-      minIdle: 10
-      maxWait: 6000
+    #    clickhouse:
+    #      driverClassName: ru.yandex.clickhouse.ClickHouseDriver
+    #      url: jdbc:clickhouse://192.168.4.223:8123/adts
+    #      username: default
+    #      password: 123456
+    #      initialSize: 10
+    #      maxActive: 100
+    #      minIdle: 10
+    #      maxWait: 6000
     mysql:
       driverClassName: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://192.168.4.223:3306/adserver?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull

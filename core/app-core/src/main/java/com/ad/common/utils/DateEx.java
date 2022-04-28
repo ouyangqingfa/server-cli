@@ -1,5 +1,9 @@
 package com.ad.common.utils;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,16 +22,16 @@ public class DateEx {
         this.calendar.setTime(new Date());
     }
 
-    public DateEx(String dateStr) throws ParseException {
-        this.parse(dateStr, DateUtils.DATE_PATTERN_DATE_TIME);
+    public DateEx(String dateStr) {
+        this.calendar.setTime(DateUtil.parse(dateStr));
     }
 
-    public DateEx(String dateStr, String pattern) throws ParseException {
+    public DateEx(String dateStr, String pattern) {
         this.parse(dateStr, pattern);
     }
 
-    public DateEx parse(String dateStr, String pattern) throws ParseException {
-        this.calendar.setTime(DateUtils.getFormatter(pattern).parse(dateStr));
+    public DateEx parse(String dateStr, String pattern) {
+        this.calendar.setTime(DateUtil.parse(dateStr, pattern));
         return this;
     }
 
@@ -36,9 +40,8 @@ public class DateEx {
         return this;
     }
 
-    public DateEx now() {
-        calendar.setTime(new Date());
-        return this;
+    public static DateEx now() {
+        return new DateEx();
     }
 
     public DateEx addDay(int days) {
@@ -91,15 +94,11 @@ public class DateEx {
     }
 
     public String format() {
-        return DateUtils.format(calendar.getTime());
-    }
-
-    public String formatDate() {
-        return format(DateUtils.DATE_PATTERN_DATE);
+        return format(DatePattern.NORM_DATETIME_PATTERN);
     }
 
     public String format(String pattern) {
-        return DateUtils.getFormatter(pattern).format(calendar.getTime());
+        return DateUtil.format(calendar.getTime(), pattern);
     }
 
 

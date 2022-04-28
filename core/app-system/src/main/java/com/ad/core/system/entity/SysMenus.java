@@ -3,13 +3,15 @@ package com.ad.core.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author CoderYoung
@@ -58,6 +60,7 @@ public class SysMenus implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getMenuId() {
         return menuId;
     }
@@ -65,6 +68,7 @@ public class SysMenus implements Serializable {
     public void setMenuId(String menuId) {
         this.menuId = menuId;
     }
+
     public String getPid() {
         return pid;
     }
@@ -72,6 +76,7 @@ public class SysMenus implements Serializable {
     public void setPid(String pid) {
         this.pid = pid;
     }
+
     public String getKey() {
         return key;
     }
@@ -79,6 +84,7 @@ public class SysMenus implements Serializable {
     public void setKey(String key) {
         this.key = key;
     }
+
     public String getTitle() {
         return title;
     }
@@ -86,6 +92,7 @@ public class SysMenus implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getIcon() {
         return icon;
     }
@@ -93,6 +100,7 @@ public class SysMenus implements Serializable {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
     public String getComponent() {
         return component;
     }
@@ -100,6 +108,7 @@ public class SysMenus implements Serializable {
     public void setComponent(String component) {
         this.component = component;
     }
+
     public Integer getSort() {
         return sort;
     }
@@ -107,6 +116,7 @@ public class SysMenus implements Serializable {
     public void setSort(Integer sort) {
         this.sort = sort;
     }
+
     public Integer getStatus() {
         return status;
     }
@@ -114,6 +124,7 @@ public class SysMenus implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     public String getRemarks() {
         return remarks;
     }
@@ -125,16 +136,16 @@ public class SysMenus implements Serializable {
     @Override
     public String toString() {
         return "SysMenus{" +
-            "id=" + id +
-            ", menuId=" + menuId +
-            ", pid=" + pid +
-            ", key=" + key +
-            ", title=" + title +
-            ", icon=" + icon +
-            ", component=" + component +
-            ", sort=" + sort +
-            ", status=" + status +
-            ", remarks=" + remarks +
-        "}";
+                "id=" + id +
+                ", menuId=" + menuId +
+                ", pid=" + pid +
+                ", key=" + key +
+                ", title=" + title +
+                ", icon=" + icon +
+                ", component=" + component +
+                ", sort=" + sort +
+                ", status=" + status +
+                ", remarks=" + remarks +
+                "}";
     }
 }

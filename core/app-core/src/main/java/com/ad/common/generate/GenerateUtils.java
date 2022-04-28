@@ -98,7 +98,9 @@ public class GenerateUtils {
                 }).strategyConfig(builder -> {
                     builder.addInclude(tables); // 设置需要生成的表名
                 }).templateConfig(config -> {
-                    config.controller("templates/myController.java");
+                    config
+//                            .entity("templates/myEntity.java")
+                            .controller("templates/myController.java");
                 })
                 // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .templateEngine(new FreemarkerTemplateEngine())

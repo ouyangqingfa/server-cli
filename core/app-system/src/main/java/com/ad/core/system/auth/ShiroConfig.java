@@ -104,6 +104,7 @@ public class ShiroConfig {
         // 登录接口放开
         filterChainDefinitionMap.put("/api/system/getRSAKey", "anon");
         filterChainDefinitionMap.put("/api/system/login", "anon");
+        filterChainDefinitionMap.put("/api/system/logout", "anon");
         addExtraWhiteList(filterChainDefinitionMap);
         // 所有请求通过我们自己的JWTFilter
         filterChainDefinitionMap.put("/**", "jwt");

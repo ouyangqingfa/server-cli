@@ -59,4 +59,8 @@ public class Constant {
      */
     public static final Integer PASSWORD_MAX_LEN = 8;
 
+
+    public static final String ADMIN_ACCOUNT = "admin";
+    public static final String ADMIN_PASSWORD = "123456";
+
 }

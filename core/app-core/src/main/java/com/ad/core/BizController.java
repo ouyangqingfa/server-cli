@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,15 +21,15 @@ public class BizController<S extends IService<M>, M> extends BaseController {
 
     @ApiOperation(value = "新增或修改")
     @PostMapping(path = "saveOrUpdate")
-    public BaseResult<Integer> saveOrUpdate(@RequestBody M part) {
-        boolean save = baseService.saveOrUpdate(part);
+    public BaseResult<Integer> saveOrUpdate(@RequestBody M entity) {
+        boolean save = baseService.saveOrUpdate(entity);
         return buildResult(save ? 1 : 0);
     }
 
     @ApiOperation(value = "删除")
     @PostMapping(path = "delete")
-    public BaseResult<Integer> delete(@RequestParam Integer partId) {
-        boolean del = baseService.removeById(partId);
+    public BaseResult<Integer> delete(@RequestParam Serializable id) {
+        boolean del = baseService.removeById(id);
         return buildResult(del ? 1 : 0);
     }
 

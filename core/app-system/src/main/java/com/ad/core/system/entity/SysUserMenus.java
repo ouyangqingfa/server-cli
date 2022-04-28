@@ -1,10 +1,13 @@
 package com.ad.core.system.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -38,6 +41,7 @@ public class SysUserMenus implements Serializable {
     private String creator;
 
     @ApiModelProperty("创建时间")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty("备注")
@@ -50,6 +54,7 @@ public class SysUserMenus implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getUid() {
         return uid;
     }
@@ -57,6 +62,7 @@ public class SysUserMenus implements Serializable {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
     public String getMenuId() {
         return menuId;
     }
@@ -64,6 +70,7 @@ public class SysUserMenus implements Serializable {
     public void setMenuId(String menuId) {
         this.menuId = menuId;
     }
+
     public Integer getStatus() {
         return status;
     }
@@ -71,6 +78,7 @@ public class SysUserMenus implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     public String getCreator() {
         return creator;
     }
@@ -78,6 +86,7 @@ public class SysUserMenus implements Serializable {
     public void setCreator(String creator) {
         this.creator = creator;
     }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -85,6 +94,7 @@ public class SysUserMenus implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
+
     public String getRemarks() {
         return remarks;
     }
@@ -96,13 +106,13 @@ public class SysUserMenus implements Serializable {
     @Override
     public String toString() {
         return "SysUserMenus{" +
-            "id=" + id +
-            ", uid=" + uid +
-            ", menuId=" + menuId +
-            ", status=" + status +
-            ", creator=" + creator +
-            ", createTime=" + createTime +
-            ", remarks=" + remarks +
-        "}";
+                "id=" + id +
+                ", uid=" + uid +
+                ", menuId=" + menuId +
+                ", status=" + status +
+                ", creator=" + creator +
+                ", createTime=" + createTime +
+                ", remarks=" + remarks +
+                "}";
     }
 }

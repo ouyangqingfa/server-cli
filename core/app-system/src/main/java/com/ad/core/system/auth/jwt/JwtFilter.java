@@ -7,6 +7,7 @@ import com.ad.core.system.common.CustomException;
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -42,30 +43,17 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             try {
                 // 进行Shiro的登录UserRealm
                 this.executeLogin(request, response);
-            } catch (Exception e) {
-                // 认证出现异常，传递错误信息msg
-                String msg = e.getMessage();
-                // 获取应用异常(该Cause是导致抛出此throwable(异常)的throwable(异常))
-                Throwable throwable = e.getCause();
-                if (throwable instanceof SignatureVerificationException) {
-                    // 该异常为JWT的AccessToken认证失败(Token或者密钥不正确)
-                    msg = "Token或者密钥不正确(" + throwable.getMessage() + ")";
-                } else if (throwable instanceof TokenExpiredException) {
-                    // 该异常为JWT的AccessToken已过期，判断RefreshToken未过期就进行AccessToken刷新
-                    if (this.refreshToken(request, response)) {
-                        return true;
-                    } else {
-                        msg = "Token已过期(" + throwable.getMessage() + ")";
-                    }
+            } catch (ExpiredCredentialsException e) {
+                // 该异常为JWT的AccessToken已过期，判断RefreshToken未过期就进行AccessToken刷新
+                if (this.refreshToken(request, response)) {
+                    return true;
                 } else {
-                    // 应用异常不为空
-                    if (throwable != null) {
-                        // 获取应用异常msg
-                        msg = throwable.getMessage();
-                    }
+                    this.response401(response, "Token已过期");
+                    return false;
                 }
+            } catch (Exception e) {
                 // Token认证失败直接返回Response信息
-                this.response401(response, msg);
+                this.response401(response, "认证失败：" + e.getMessage());
                 return false;
             }
         } else {
@@ -127,8 +115,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String token = this.getAuthzHeader(request);
         // 获取当前Token的帐号信息
         String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
-        // 判断Cache中RefreshToken是否存在
-        if (AppCacheUtil.SHIRO_CACHE.exists(account)) {
+        // 缓存中还存在该用户则允许自动刷新token
+        if (AppCacheUtil.USER_CACHE.exists(account)) {
             String newToken = JwtUtil.sign(account);
             this.getSubject(request, response).login(new JwtToken(newToken));
             HttpServletResponse httpServletResponse = WebUtils.toHttp(response);

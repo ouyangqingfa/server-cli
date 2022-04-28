@@ -1,6 +1,10 @@
 package com.ad.core.system.entity;
 
+import cn.hutool.json.JSONArray;
+import com.ad.common.extension.MyBatisPlusJsonTypeHandler;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -17,9 +21,9 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author CoderYoung
- * @since 2022-04-20
+ * @since 2022-04-27
  */
-@TableName("sys_user")
+@TableName(value = "sys_user", autoResultMap = true)
 @ApiModel(value = "SysUser对象", description = "用户表")
 public class SysUser implements Serializable {
 
@@ -42,7 +46,8 @@ public class SysUser implements Serializable {
     private String company;
 
     @ApiModelProperty("部门")
-    private String department;
+    @TableField(typeHandler = MyBatisPlusJsonTypeHandler.class)
+    private JSONArray department;
 
     @ApiModelProperty("工作职位")
     private String job;
@@ -67,6 +72,7 @@ public class SysUser implements Serializable {
     private String sign;
 
     @ApiModelProperty("注册时间")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
 
     @ApiModelProperty("人员状态")
@@ -76,7 +82,15 @@ public class SysUser implements Serializable {
     private String creator;
 
     @ApiModelProperty("创建时间")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
+
+    @ApiModelProperty("修改人")
+    private String updater;
+
+    @ApiModelProperty("修改时间")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
     @ApiModelProperty("备注")
     private String remark;
@@ -121,11 +135,11 @@ public class SysUser implements Serializable {
         this.company = company;
     }
 
-    public String getDepartment() {
+    public JSONArray getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(JSONArray department) {
         this.department = department;
     }
 
@@ -217,6 +231,22 @@ public class SysUser implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -227,25 +257,6 @@ public class SysUser implements Serializable {
 
     @Override
     public String toString() {
-        return "SysUser{" +
-                "id=" + id +
-                ", uid=" + uid +
-                ", uname=" + uname +
-                ", pwd=" + pwd +
-                ", company=" + company +
-                ", department=" + department +
-                ", job=" + job +
-                ", sno=" + sno +
-                ", idNum=" + idNum +
-                ", email=" + email +
-                ", phone=" + phone +
-                ", avatar=" + avatar +
-                ", sign=" + sign +
-                ", regDate=" + regDate +
-                ", status=" + status +
-                ", creator=" + creator +
-                ", createTime=" + createTime +
-                ", remark=" + remark +
-                "}";
+        return "SysUser{" + "id=" + id + ", uid=" + uid + ", uname=" + uname + ", pwd=" + pwd + ", company=" + company + ", department=" + department + ", job=" + job + ", sno=" + sno + ", idNum=" + idNum + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", sign=" + sign + ", regDate=" + regDate + ", status=" + status + ", creator=" + creator + ", createTime=" + createTime + ", updater=" + updater + ", updateTime=" + updateTime + ", remark=" + remark + "}";
     }
 }

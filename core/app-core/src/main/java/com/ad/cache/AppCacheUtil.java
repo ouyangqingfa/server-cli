@@ -21,12 +21,12 @@ public class AppCacheUtil {
     private static final Map<String, AppCache> CACHE_GROUPS_MAP = new HashMap<>();
 
     public static final AppCache USER_CACHE = new AppCache(CACHE_MANAGER, CACHE_USER_KEY);
-    public static final AppCache SHIRO_CACHE = new AppCache(CACHE_MANAGER, CACHE_SHIRO_USER);
+//    public static final AppCache SHIRO_CACHE = new AppCache(CACHE_MANAGER, CACHE_SHIRO_USER);
     public static final AppCache TOKEN_CACHE = new AppCache(CACHE_MANAGER, CACHE_SHIRO_TOKEN_KEY);
 
     static {
         CACHE_GROUPS_MAP.put(CACHE_USER_KEY, USER_CACHE);
-        CACHE_GROUPS_MAP.put(CACHE_SHIRO_USER, SHIRO_CACHE);
+//        CACHE_GROUPS_MAP.put(CACHE_SHIRO_USER, SHIRO_CACHE);
         CACHE_GROUPS_MAP.put(CACHE_SHIRO_TOKEN_KEY, TOKEN_CACHE);
     }
 

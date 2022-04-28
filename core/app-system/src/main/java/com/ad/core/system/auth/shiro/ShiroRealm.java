@@ -1,16 +1,14 @@
 package com.ad.core.system.auth.shiro;
 
-import com.ad.cache.AppCacheUtil;
 import com.ad.core.system.auth.jwt.JwtToken;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
 import com.ad.core.system.service.ISysUserService;
+import com.ad.core.system.utils.UserUtil;
+import com.ad.core.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -42,7 +40,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (account == null) {
             throw new AuthenticationException("无效的token");
         }
-        SysUser userInfo = userService.getUserByUserId(account);
+        UserVo userInfo = UserUtil.getUser(account);
         if (userInfo == null) {
             throw new AuthenticationException("该帐号不存在(The account does not exist.)");
         }
@@ -63,29 +61,22 @@ public class ShiroRealm extends AuthorizingRealm {
         String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
         // 帐号为空
         if (StringUtils.isBlank(account)) {
-            throw new AuthenticationException("Token中帐号为空(The account in Token is empty.)");
+            throw new UnknownAccountException("Token中帐号为空(The account in Token is empty.)");
         }
 
-        if (JwtUtil.verify(token) == 2) {
-            throw new AuthenticationException("token已经过期");
-        } else if (JwtUtil.verify(token) == -1) {
+        int verify = JwtUtil.verify(token);
+        if (verify == 2) {
+            throw new ExpiredCredentialsException("token已经过期");
+        } else if (verify == -1) {
             throw new AuthenticationException("用户名或者密码错误");
         }
-
-        //加入缓存用户信息
-        SysUser userInfo = (SysUser) AppCacheUtil.USER_CACHE.get(account);
+        SysUser userInfo = UserUtil.getUser(account);
         if (userInfo == null) {
-            userInfo = userService.getUserByUserId(account);
-            if (userInfo != null) {
-                AppCacheUtil.USER_CACHE.put(account, userInfo);
-            }
-        }
-        if (userInfo == null) {
-            throw new AuthenticationException("该帐号不存在(The account does not exist.)");
+            throw new AccountException("该帐号不存在(The account does not exist.)");
         }
 
         if (userInfo.getStatus() != 1) {
-            throw new AuthenticationException("账号状态异常");
+            throw new AccountException("账号状态异常");
         }
 
         return new SimpleAuthenticationInfo(token, token, getName());

@@ -34,7 +34,7 @@ public class AppEhCache implements IAppCache {
 
     private final Map<String, Cache<String, Object>> cacheMap = new HashMap<>();
 
-    private Cache<String, Object> getCache(String group) {
+    private synchronized Cache<String, Object> getCache(String group) {
         if (cacheMap.containsKey(group)) {
             return cacheMap.get(group);
         } else {

@@ -9,11 +9,10 @@ import com.ad.cache.AppCacheUtil;
 import com.ad.common.utils.DateEx;
 import com.ad.core.BaseController;
 import com.ad.core.BaseResult;
-import com.ad.core.system.auth.cache.ShiroCache;
 import com.ad.core.system.auth.jwt.JwtUtil;
-import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
 import com.ad.core.system.service.ISysUserService;
+import com.ad.core.system.utils.UserUtil;
 import com.ad.core.system.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -81,9 +80,12 @@ public class SystemController extends BaseController {
                 if (user != null) {
                     String finalPwd = SecureUtil.sha1(decryptPwd + user.getSign());
                     if (user.getPwd().equals(finalPwd)) {
-                        UserVo userVo = Convert.convert(UserVo.class, user);
+                        UserVo userVo = UserUtil.getUser(user);
+                        //重新登录
+                        if (StringUtils.isNotBlank(userVo.getToken())) {
+                            AppCacheUtil.TOKEN_CACHE.remove(userVo.getToken());
+                        }
                         userVo.setToken(JwtUtil.sign(uid));
-                        AppCacheUtil.SHIRO_CACHE.put(uid, new DateEx().getSeconds());
                         return buildResult(userVo);
                     } else {
                         return buildError(-3, "密码错误");
@@ -110,7 +112,7 @@ public class SystemController extends BaseController {
         if (StringUtils.isNotEmpty(token)) {
             AppCacheUtil.TOKEN_CACHE.remove(token);
         }
-        AppCacheUtil.SHIRO_CACHE.remove(uid);
+        AppCacheUtil.USER_CACHE.remove(uid);
         return buildResult(true);
     }
 

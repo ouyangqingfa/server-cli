@@ -1,5 +1,6 @@
 package com.ad.core.system.vo;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.ad.core.system.entity.SysUser;
 
 /**
@@ -8,6 +9,13 @@ import com.ad.core.system.entity.SysUser;
  * @author CoderYoung
  */
 public class UserVo extends SysUser {
+
+    public UserVo() {
+    }
+
+    public UserVo(SysUser sysUser) {
+        BeanUtil.copyProperties(sysUser, this);
+    }
 
     private String token;
     /**
