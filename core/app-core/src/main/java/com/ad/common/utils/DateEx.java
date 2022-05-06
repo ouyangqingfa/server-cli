@@ -59,14 +59,14 @@ public class DateEx {
         return this;
     }
 
-    public DateEx getStartOfDay() {
+    public DateEx startOfDay() {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         return this;
     }
 
-    public DateEx getEndOfDay() {
+    public DateEx endOfDay() {
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);

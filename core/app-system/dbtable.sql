@@ -20,6 +20,7 @@ create table sys_org
     org_id      varchar(64)  not null comment '机构id',
     pid         varchar(64)  null comment '父项ID',
     name        varchar(255) not null comment '名称',
+    sort        int default 0 not null comment '菜单排序',
     remarks     varchar(255) null comment '备注',
     creator     varchar(255) null comment '创建人',
     create_time datetime     null comment '创建人',

@@ -61,6 +61,5 @@ public class Constant {
 
 
     public static final String ADMIN_ACCOUNT = "admin";
-    public static final String ADMIN_PASSWORD = "123456";
 
 }

@@ -78,6 +78,9 @@ public class SystemController extends BaseController {
                 String decryptPwd = rsa.decryptStr(pwd, KeyType.PrivateKey);
                 SysUser user = userService.getUserByUserId(uid);
                 if (user != null) {
+                    if (user.getStatus() != 1) {
+                        return buildError(-6, "账号状态异常");
+                    }
                     String finalPwd = SecureUtil.sha1(decryptPwd + user.getSign());
                     if (user.getPwd().equals(finalPwd)) {
                         UserVo userVo = UserUtil.getUser(user);
@@ -88,17 +91,17 @@ public class SystemController extends BaseController {
                         userVo.setToken(JwtUtil.sign(uid));
                         return buildResult(userVo);
                     } else {
-                        return buildError(-3, "密码错误");
+                        return buildError(-5, "密码错误");
                     }
                 } else {
-                    return buildError(-2, "用户不存在");
+                    return buildError(-4, "用户不存在");
                 }
             } catch (CryptoException e) {
                 logger.error(e.getMessage());
-                return buildError(-4, "密钥异常");
+                return buildError(-2, "密钥异常");
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                return buildError(-5, e.getMessage());
+                return buildError(-3, e.getMessage());
             }
         } else {
             return buildError(-1, "检查传参");

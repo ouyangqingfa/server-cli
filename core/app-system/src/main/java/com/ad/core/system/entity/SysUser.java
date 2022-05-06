@@ -1,7 +1,7 @@
 package com.ad.core.system.entity;
 
-import cn.hutool.json.JSONArray;
 import com.ad.common.extension.MyBatisPlusJsonTypeHandler;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -41,8 +41,8 @@ public class BizController<S extends IService<M>, M> extends BaseController {
     }
 
     @ApiOperation(value = "分页查询所有数据")
-    @PostMapping(path = "selectByPage")
-    public PageResult<M> selectByPage(@RequestParam Integer currentPage,
+    @PostMapping(path = "selectAllByPage")
+    public PageResult<M> selectAllByPage(@RequestParam Integer currentPage,
                                       @RequestParam Integer pageSize) {
         return buildResult(baseService.page(new Page<>(currentPage, pageSize)));
     }

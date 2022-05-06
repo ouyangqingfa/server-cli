@@ -100,6 +100,7 @@ public class GenerateUtils {
                 }).templateConfig(config -> {
                     config
 //                            .entity("templates/myEntity.java")
+                            .serviceImpl("templates/myServiceImpl.java")
                             .controller("templates/myController.java");
                 })
                 // 使用Freemarker引擎模板，默认的是Velocity引擎模板

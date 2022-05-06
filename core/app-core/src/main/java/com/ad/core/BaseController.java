@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -17,7 +18,7 @@ public class BaseController {
     private final int DEFAULT_ERROR_CODE = -1;
 
     public <T> BaseResult<T> buildResult(T data) {
-        return buildResult(SUCCESS_CODE, "", data);
+        return buildResult(SUCCESS_CODE, null, data);
     }
 
     public <T> BaseResult<T> buildResult(T data, String msg) {
@@ -47,14 +48,36 @@ public class BaseController {
         return response;
     }
 
+    public PageResult buildPageError(int code) {
+        return buildPageError(code, "未处理的错误");
+    }
+
+    public PageResult buildPageError(String errMsg) {
+        return buildPageError(DEFAULT_ERROR_CODE, errMsg);
+    }
+
+    public PageResult buildPageError(int code, String errMsg) {
+        PageResult response = new PageResult();
+        response.setCode(code);
+        response.setMsg(errMsg);
+        return response;
+    }
+
     public <T> PageResult<T> buildResult(IPage<T> page) {
         PageResult<T> response = new PageResult<>();
-        response.setPageCount(page.getPages());
-        response.setPageIndex(page.getCurrent());
-        response.setPageSize(page.getSize());
-        response.setTotalSize(page.getTotal());
-        response.setData(page.getRecords());
-
+        if (page != null) {
+            response.setPageCount(page.getPages());
+            response.setPageIndex(page.getCurrent());
+            response.setPageSize(page.getSize());
+            response.setTotalSize(page.getTotal());
+            response.setData(page.getRecords());
+        } else {
+            response.setPageCount(0L);
+            response.setPageIndex(0L);
+            response.setPageSize(0L);
+            response.setTotalSize(0L);
+            response.setData(new ArrayList<>());
+        }
         response.setCode(SUCCESS_CODE);
         return response;
     }
@@ -62,11 +85,19 @@ public class BaseController {
 
     public <T> PageResult<T> buildResult(Collection<T> data) {
         PageResult<T> response = new PageResult<>();
-        response.setPageCount(1L);
-        response.setPageIndex(1L);
-        response.setPageSize(1L);
-        response.setTotalSize((long) data.size());
-        response.setData(data);
+        if (data != null) {
+            response.setPageCount(1L);
+            response.setPageIndex(1L);
+            response.setPageSize((long) data.size());
+            response.setTotalSize((long) data.size());
+            response.setData(data);
+        } else {
+            response.setPageCount(0L);
+            response.setPageIndex(0L);
+            response.setPageSize(0L);
+            response.setTotalSize(0L);
+            response.setData(new ArrayList<>());
+        }
 
         response.setCode(SUCCESS_CODE);
         return response;

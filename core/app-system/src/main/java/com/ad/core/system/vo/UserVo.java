@@ -3,6 +3,8 @@ package com.ad.core.system.vo;
 import cn.hutool.core.bean.BeanUtil;
 import com.ad.core.system.entity.SysUser;
 
+import java.util.List;
+
 /**
  * 用户信息
  *
@@ -37,5 +39,16 @@ public class UserVo extends SysUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

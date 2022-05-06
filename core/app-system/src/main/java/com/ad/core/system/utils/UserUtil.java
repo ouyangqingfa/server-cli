@@ -1,7 +1,7 @@
 package com.ad.core.system.utils;
 
 import com.ad.cache.AppCacheUtil;
-import com.ad.common.utils.AppContext;
+import com.ad.core.AppContext;
 import com.ad.common.web.Servlets;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
@@ -21,24 +21,6 @@ import org.springframework.context.annotation.Lazy;
 public class UserUtil {
 
     private static final ISysUserService userService = AppContext.getBean(SysUserServiceImpl.class);
-
-    public static UserVo getUser(String account) {
-        UserVo userInfo = (UserVo) AppCacheUtil.USER_CACHE.get(account);
-        if (userInfo == null) {
-            userInfo = getUser(userService.getUserByUserId(account));
-        }
-        return userInfo;
-    }
-
-    public static UserVo getUser(SysUser sysUser) {
-        UserVo userInfo = null;
-        if (sysUser != null) {
-            userInfo = new UserVo(sysUser);
-            //TODO 添加其他信息（权限-菜单列表）
-            AppCacheUtil.USER_CACHE.put(sysUser.getUid(), userInfo);
-        }
-        return userInfo;
-    }
 
 
     /**
@@ -78,7 +60,37 @@ public class UserUtil {
     }
 
     /**
-     * 是否为系统管理员
+     * 获取指定用户账号的用户信息
+     *
+     * @param account
+     * @return
+     */
+    public static UserVo getUser(String account) {
+        UserVo userInfo = (UserVo) AppCacheUtil.USER_CACHE.get(account);
+        if (userInfo == null) {
+            userInfo = getUser(userService.getUserByUserId(account));
+        }
+        return userInfo;
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param sysUser
+     * @return
+     */
+    public static UserVo getUser(SysUser sysUser) {
+        UserVo userInfo = null;
+        if (sysUser != null) {
+            userInfo = new UserVo(sysUser);
+            //TODO 添加其他信息（权限-菜单列表）
+            AppCacheUtil.USER_CACHE.put(sysUser.getUid(), userInfo);
+        }
+        return userInfo;
+    }
+
+    /**
+     * 当前会话用户是否为系统管理员
      *
      * @return
      */

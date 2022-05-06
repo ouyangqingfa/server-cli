@@ -48,7 +48,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 if (this.refreshToken(request, response)) {
                     return true;
                 } else {
-                    this.response401(response, "Token已过期");
+                    this.response401(response, "登录过期");
                     return false;
                 }
             } catch (Exception e) {
@@ -80,7 +80,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthzHeader方法已经实现)
+        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthHeader方法已经实现)
         String token = this.getAuthzHeader(request);
         return token != null;
     }
@@ -90,7 +90,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthzHeader方法已经实现)
+        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthHeader方法已经实现)
         JwtToken token = new JwtToken(this.getAuthzHeader(request));
         // 提交给UserRealm进行认证，如果错误他会抛出异常并被捕获
         this.getSubject(request, response).login(token);
@@ -111,7 +111,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      * 此处为AccessToken刷新，进行判断RefreshToken是否过期，未过期就返回新的AccessToken且继续正常访问
      */
     private boolean refreshToken(ServletRequest request, ServletResponse response) {
-        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthzHeader方法已经实现)
+        // 拿到当前Header中Authorization的AccessToken(Shiro中getAuthHeader方法已经实现)
         String token = this.getAuthzHeader(request);
         // 获取当前Token的帐号信息
         String account = JwtUtil.getClaim(token, Constant.ACCOUNT);
