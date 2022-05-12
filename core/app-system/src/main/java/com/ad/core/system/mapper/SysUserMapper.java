@@ -19,6 +19,15 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
+     * 根据uid获取用户对象
+     *
+     * @param uid
+     * @return
+     */
+    @Select("select * from sys_user where uid='${uid}'")
+    SysUser getUserByUserId(String uid);
+
+    /**
      * 根据角色分页获取用户列表
      *
      * @param page

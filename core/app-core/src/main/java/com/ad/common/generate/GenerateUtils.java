@@ -1,12 +1,14 @@
 package com.ad.common.generate;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.fill.Column;
 
 import java.io.File;
 import java.util.Collections;
@@ -96,7 +98,15 @@ public class GenerateUtils {
                             .entity("entity")
                             .xml("mapper.mapping");
                 }).strategyConfig(builder -> {
-                    builder.addInclude(tables); // 设置需要生成的表名
+                    builder.addInclude(tables).addTablePrefix("t_");
+                    builder
+                            .entityBuilder()
+                            .addTableFills(new Column("id", FieldFill.INSERT))
+                            .addTableFills(new Column("creator", FieldFill.INSERT))
+                            .addTableFills(new Column("create_time", FieldFill.INSERT))
+                            .addTableFills(new Column("updater", FieldFill.UPDATE))
+                            .addTableFills(new Column("update_time", FieldFill.UPDATE))
+                            .build();
                 }).templateConfig(config -> {
                     config
 //                            .entity("templates/myEntity.java")

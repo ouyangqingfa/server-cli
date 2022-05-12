@@ -28,7 +28,7 @@ public class SystemDevTestController extends BaseController {
     @ApiOperation("开发调试Token")
     @GetMapping("getDevToken")
     public BaseResult<String> getDevToken(String uid) {
-        return buildResult(JwtUtil.sign(uid));
+        return buildResult(JwtUtil.sign(uid, 30));
     }
 
 }

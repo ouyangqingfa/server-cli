@@ -28,7 +28,7 @@ public class BizController<S extends IService<M>, M> extends BaseController {
 
     @ApiOperation(value = "删除")
     @PostMapping(path = "delete")
-    public BaseResult<Integer> delete(@RequestParam Serializable id) {
+    public BaseResult<Integer> delete(@RequestParam String id) {
         boolean del = baseService.removeById(id);
         return buildResult(del ? 1 : 0);
     }
@@ -42,8 +42,7 @@ public class BizController<S extends IService<M>, M> extends BaseController {
 
     @ApiOperation(value = "分页查询所有数据")
     @PostMapping(path = "selectAllByPage")
-    public PageResult<M> selectAllByPage(@RequestParam Integer currentPage,
-                                      @RequestParam Integer pageSize) {
+    public PageResult<M> selectAllByPage(@RequestParam Integer currentPage, @RequestParam Integer pageSize) {
         return buildResult(baseService.page(new Page<>(currentPage, pageSize)));
     }
 

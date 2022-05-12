@@ -37,6 +37,9 @@ public class SysRoleMenus implements Serializable {
     @ApiModelProperty("状态控制")
     private Integer status;
 
+    @ApiModelProperty("菜单类型 0组 1菜单")
+    private Integer menuType;
+
     @ApiModelProperty("菜单排序")
     private Integer sort;
 
@@ -80,6 +83,14 @@ public class SysRoleMenus implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(Integer menuType) {
+        this.menuType = menuType;
     }
 
     public Integer getSort() {

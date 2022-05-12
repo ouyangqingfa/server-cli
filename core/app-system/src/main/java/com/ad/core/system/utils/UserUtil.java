@@ -1,8 +1,8 @@
 package com.ad.core.system.utils;
 
 import com.ad.cache.AppCacheUtil;
-import com.ad.core.AppContext;
 import com.ad.common.web.Servlets;
+import com.ad.core.AppContext;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
@@ -12,16 +12,20 @@ import com.ad.core.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.springframework.context.annotation.Lazy;
 
 /**
  * @author CoderYoung
  */
-@Lazy
 public class UserUtil {
 
-    private static final ISysUserService userService = AppContext.getBean(SysUserServiceImpl.class);
+    private static ISysUserService userService = null;
 
+    private static ISysUserService getUserService() {
+        if (UserUtil.userService == null) {
+            UserUtil.userService = AppContext.getBean(SysUserServiceImpl.class);
+        }
+        return userService;
+    }
 
     /**
      * 获取当前会话用户的token
@@ -68,7 +72,7 @@ public class UserUtil {
     public static UserVo getUser(String account) {
         UserVo userInfo = (UserVo) AppCacheUtil.USER_CACHE.get(account);
         if (userInfo == null) {
-            userInfo = getUser(userService.getUserByUserId(account));
+            userInfo = getUser(getUserService().getUserByUserId(account));
         }
         return userInfo;
     }
@@ -87,6 +91,11 @@ public class UserUtil {
             AppCacheUtil.USER_CACHE.put(sysUser.getUid(), userInfo);
         }
         return userInfo;
+    }
+
+    public static String getUserName() {
+        UserVo user = getUser();
+        return user != null ? user.getUid() : "unknown";
     }
 
     /**

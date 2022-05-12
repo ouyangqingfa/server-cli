@@ -6,6 +6,7 @@ import com.ad.core.system.service.ISysOrgService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 /**
  * <p>
  * 机构 服务实现类
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> implements ISysOrgService {
 
+    @Override
+    public List<String> getAllChildIds(String orgId) {
+        return baseMapper.getAllChildIds(orgId);
+    }
 }

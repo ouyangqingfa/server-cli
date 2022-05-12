@@ -2,7 +2,9 @@ package com.ad.core.system.service.impl;
 
 import com.ad.core.system.entity.SysUser;
 import com.ad.core.system.entity.SysUserRole;
+import com.ad.core.system.mapper.SysOrgMapper;
 import com.ad.core.system.mapper.SysUserMapper;
+import com.ad.core.system.service.ISysOrgService;
 import com.ad.core.system.service.ISysUserRoleService;
 import com.ad.core.system.service.ISysUserService;
 import com.ad.core.system.vo.UserParamVo;
@@ -34,9 +36,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private ISysUserRoleService roleService;
 
+    private ISysOrgService orgService;
+
     @Autowired
-    public SysUserServiceImpl(ISysUserRoleService roleService) {
+    public SysUserServiceImpl(ISysUserRoleService roleService, ISysOrgService orgService) {
         this.roleService = roleService;
+        this.orgService = orgService;
     }
 
     @Override
@@ -56,7 +61,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 userQueryWrapper.like("uname", params.getName());
             }
             if (StringUtils.isNotBlank(params.getOrgId())) {
-                userQueryWrapper.apply("JSON_CONTAINS(department,JSON_ARRAY({0}))", params.getOrgId());
+                List<String> childIds = orgService.getAllChildIds(params.getOrgId());
+                userQueryWrapper.in("department", childIds);
             }
             if (StringUtils.isNotBlank(params.getName())) {
                 userQueryWrapper.and(q -> q.like("uid", params.getName()).or().like("uname", params.getName()));

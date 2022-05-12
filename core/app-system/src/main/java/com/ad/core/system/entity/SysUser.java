@@ -1,19 +1,15 @@
 package com.ad.core.system.entity;
 
-import com.ad.common.extension.MyBatisPlusJsonTypeHandler;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -23,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author CoderYoung
  * @since 2022-04-27
  */
-@TableName(value = "sys_user", autoResultMap = true)
+@TableName(value = "sys_user")
 @ApiModel(value = "SysUser对象", description = "用户表")
 public class SysUser implements Serializable {
 
@@ -46,8 +42,7 @@ public class SysUser implements Serializable {
     private String company;
 
     @ApiModelProperty("部门")
-    @TableField(typeHandler = MyBatisPlusJsonTypeHandler.class)
-    private JSONArray department;
+    private String department;
 
     @ApiModelProperty("工作职位")
     private String job;
@@ -135,11 +130,11 @@ public class SysUser implements Serializable {
         this.company = company;
     }
 
-    public JSONArray getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(JSONArray department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 

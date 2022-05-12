@@ -1,5 +1,6 @@
 package com.ad.core.starter.config.mysql;
 
+import com.ad.core.starter.config.mysql.handler.MyMetaObjectHandler;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
@@ -71,7 +72,7 @@ public class DataSourceMySqlConfig {
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         bean.setConfiguration(configuration);
 
-        bean.setGlobalConfig(new GlobalConfig().setBanner(false));
+        bean.setGlobalConfig(new GlobalConfig().setMetaObjectHandler(new MyMetaObjectHandler()).setBanner(false));
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         bean.setPlugins(interceptor);
@@ -81,8 +82,7 @@ public class DataSourceMySqlConfig {
 
     @Bean("MySqlSessionTemplate")
     @Primary
-    public SqlSessionTemplate mySqlSessionTemplate(
-            @Qualifier("MySqlSessionFactory") SqlSessionFactory sessionfactory) {
+    public SqlSessionTemplate mySqlSessionTemplate(@Qualifier("MySqlSessionFactory") SqlSessionFactory sessionfactory) {
         return new SqlSessionTemplate(sessionfactory);
     }
 

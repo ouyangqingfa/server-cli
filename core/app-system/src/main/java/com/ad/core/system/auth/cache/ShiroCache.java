@@ -3,6 +3,7 @@ package com.ad.core.system.auth.cache;
 import com.ad.cache.AppCacheUtil;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,10 +13,9 @@ import java.util.Set;
 /**
  * @author CoderYoung
  */
-@SuppressWarnings({"unchecked"})
-@Service("adServerShiroCache")
+@SuppressWarnings({"rawtypes", "unchecked"})
+//@Component("adServerShiroCache")
 public class ShiroCache<K, V> implements Cache<K, V> {
-
 
     @Override
     public V get(K k) throws CacheException {

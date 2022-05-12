@@ -76,11 +76,15 @@ public class JwtUtil {
      * @return java.lang.String 返回加密的Token
      */
     public static String sign(String account) {
+        return sign(account, 1);
+    }
+
+    public static String sign(String account, int days) {
         // 帐号加JWT私钥加密
         String secret = account + Base64.encode(ENCRYPT_JWT_KEY);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // Token有效期 1天
-        Date expireDate = new DateEx().addDay(1).getDate();
+        Date expireDate = new DateEx().addDay(days).getDate();
         // 附带account帐号信息
         return JWT.create()
                 .withClaim("account", account)

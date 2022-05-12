@@ -1,11 +1,13 @@
 package com.ad.core.system.vo;
 
+import java.io.Serializable;
+
 /**
  * 用户查询参数
  *
  * @author CoderYoung
  */
-public class UserParamVo {
+public class UserParamVo implements Serializable {
 
     private String roleId;
     private String orgId;

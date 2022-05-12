@@ -7,6 +7,7 @@ import com.ad.core.system.auth.jwt.JwtFilter;
 import com.ad.core.system.auth.shiro.ShiroRealm;
 import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -35,6 +37,11 @@ public class ShiroConfig {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Bean
+    public CacheManager shiroCacheManager() {
+        return new ShiroCacheManager();
+    }
+
     /**
      * 配置使用自定义Realm，关闭Shiro自带的session
      * 详情见文档 http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
@@ -43,7 +50,7 @@ public class ShiroConfig {
      * @return org.apache.shiro.web.mgt.DefaultWebSecurityManager
      */
     @Bean("securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(ShiroRealm userRealm, @Qualifier("adServerShiroCacheManager") ShiroCacheManager cacheManager) {
+    public DefaultWebSecurityManager defaultWebSecurityManager(ShiroRealm userRealm, CacheManager cacheManager) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         // 使用自定义Realm
         userRealm.setCachingEnabled(true);
@@ -79,7 +86,7 @@ public class ShiroConfig {
      * @return org.apache.shiro.spring.web.ShiroFilterFactoryBean
      */
     @Bean("shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Lazy DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         // 添加自己的过滤器取名为jwt
         Map<String, Filter> filterMap = new HashMap<>(16);
@@ -144,6 +151,11 @@ public class ShiroConfig {
         return basicHttpAuthenticationFilter;
     }
 
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
     /**
      * 下面的代码是添加注解支持
      */
@@ -156,12 +168,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Lazy DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;

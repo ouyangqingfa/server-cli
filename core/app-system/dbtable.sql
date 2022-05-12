@@ -17,15 +17,15 @@ create table sys_org
 (
     id          int auto_increment
         primary key,
-    org_id      varchar(64)  not null comment '机构id',
-    pid         varchar(64)  null comment '父项ID',
-    name        varchar(255) not null comment '名称',
+    org_id      varchar(64)   not null comment '机构id',
+    pid         varchar(64)   null comment '父项ID',
+    name        varchar(255)  not null comment '名称',
     sort        int default 0 not null comment '菜单排序',
-    remarks     varchar(255) null comment '备注',
-    creator     varchar(255) null comment '创建人',
-    create_time datetime     null comment '创建人',
-    updater     varchar(255) null comment '修改人',
-    update_time datetime     null comment '修改人'
+    remarks     varchar(255)  null comment '备注',
+    creator     varchar(255)  null comment '创建人',
+    create_time datetime      null comment '创建人',
+    updater     varchar(255)  null comment '修改人',
+    update_time datetime      null comment '修改人'
 )
     comment '机构';
 
@@ -36,6 +36,7 @@ create table sys_role_menus
     role_id     varchar(36)   not null comment '角色id',
     menu_id     varchar(36)   not null comment '菜单ID',
     status      int default 1 not null comment '状态控制',
+    menu_type   int default 0 not null comment '菜单类型（0组1菜单）',
     sort        int default 0 not null comment '菜单排序',
     creator     varchar(50)   null comment '创建人',
     create_time datetime      null comment '创建时间',
@@ -61,7 +62,7 @@ create table sys_user
     uname       varchar(64)   not null comment '用户名称',
     pwd         varchar(256)  not null comment '用户密码',
     company     varchar(100)  null comment '公司',
-    department  json          null comment '部门',
+    department  varchar(100)  null comment '部门',
     job         varchar(100)  null comment '工作职位',
     sno         int           null comment '工号',
     id_num      varchar(18)   null comment '身份证号码',

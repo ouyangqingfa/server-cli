@@ -4,7 +4,6 @@ import com.ad.core.system.auth.jwt.JwtToken;
 import com.ad.core.system.auth.jwt.JwtUtil;
 import com.ad.core.system.common.Constant;
 import com.ad.core.system.entity.SysUser;
-import com.ad.core.system.service.ISysUserService;
 import com.ad.core.system.utils.UserUtil;
 import com.ad.core.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
@@ -13,20 +12,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 /**
  * @author CoderYoung
  */
-@Service
+@Component
 public class ShiroRealm extends AuthorizingRealm {
-
-    @Resource
-    @Lazy
-    private ISysUserService userService;
 
     @Override
     public boolean supports(AuthenticationToken authenticationToken) {

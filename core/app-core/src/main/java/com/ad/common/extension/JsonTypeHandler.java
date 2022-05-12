@@ -15,7 +15,7 @@ import java.sql.SQLException;
 /**
  * @author CoderYoung
  */
-public class MyBatisPlusJsonTypeHandler extends BaseTypeHandler<JSON> {
+public class JsonTypeHandler extends BaseTypeHandler<JSON> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JSON parameter, JdbcType jdbcType) throws SQLException {
